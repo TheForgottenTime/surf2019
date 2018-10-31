@@ -4,27 +4,51 @@
 int incomingByte = 0; 
 int potpin = 0;  // analog pin used to connect the potentiometer
 int val;
-Servo esc;
+
+
+Servo jetLeft;
+Servo jetRight;
+Servo frontLeft;
+Servo frontRight;
+Servo backLeft;
+Servo backRight;
  
 void setup()
 {
   Serial.begin(9600);
-  esc.attach(9);
+  
+  jetLeft.attach(2);
+  jetRight.attach(3);
+  frontLeft.attach(4);
+  frontRight.attach(5);
+  backLeft.attach(6);
+  backRight.attach(7);
   arm();
+
 }
 
 void arm(){
- // arm the speed controller, modify as necessary for your ESC  
- setSpeed(0); 
+ //arm the motors with 90 which is neutral.
+ setSpeed(90, jetLeft);
+ setSpeed(90, jetRight);
+ setSpeed(90, frontLeft);
+ setSpeed(90, frontRight);
+ setSpeed(90, backLeft);
+ setSpeed(90, backRight);
  delay(1000); //delay 1 second,  some speed controllers may need longer
 }
 
-void setSpeed(int speed){
+void setSpeed(int speed, Servo _servo){
  // speed is from 0 to 100 where 0 is off and 100 is maximum speed
  //the following maps speed values of 0-100 to angles from 0-180,
  // some speed controllers may need different values, see the ESC instructions
  int angle = map(speed, 0, 100, 0, 180);
- esc.write(angle);    
+ jetLeft.write(angle);    
+}
+
+void goForward(int speed, float rateOfChange){
+  jetLeft.write(speed);
+  jetRight.write(speed);
 }
 
 void loop()

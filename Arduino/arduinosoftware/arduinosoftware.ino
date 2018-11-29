@@ -1,7 +1,7 @@
 //this code write potentiometer data(A0) to the servo motors (pin 9)
 
 #include <Servo.h>
-int incomingByte = 0; 
+String incomingString = ""; 
 int potpin = 0;  // analog pin used to connect the potentiometer
 int val;
 
@@ -29,8 +29,8 @@ void setup()
 
 void arm(){
  //arm the motors with 90 which is neutral.
- setSpeed(90, jetLeft);
- setSpeed(90, jetRight);
+ setSpeed(0, jetLeft);
+ setSpeed(0, jetRight);
  setSpeed(90, frontLeft);
  setSpeed(90, frontRight);
  setSpeed(90, backLeft);
@@ -53,11 +53,28 @@ void goForward(int speed, float rateOfChange){
 
 void loop()
 {
- val = analogRead(potpin);            // reads the value of the potentiometer (value between 0 and 1023)
-  val = map(val, 0, 660, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
-  Serial.println(val);                  // sets the servo position according to the scaled value
-  setSpeed(val);      
+  setSpeed(val, jetLeft);      
+  if (Serial.available() > 0) {
+                // read the incoming byte:
+                incomingString = Serial.readString();
+                Serial.println("I received: ");
+                String motorString = getValue(incomingString, ':', 0);
+                String speedString = getValue(incomingString, ':', 1);
+                String gradientString = getValue(incomingString, ':', 2);
 
+                int motor = motorString.toInt();
+                int speed = speedString.toInt();
+                //double gradient = gradientString.toDouble();
+                
+                Serial.println("Motor:");
+                Serial.print(motor, DEC);
+                Serial.println("Speed:");
+                Serial.print(speed, DEC);
+                goForward(speed, 1);
+                //Serial.println("Gradient:" + gradient);
+                //Serial.println(incomingByte, DEC);
+        }
+}
   /*
   if (Serial.available() > 0) {
                 // read the incoming byte:
@@ -69,4 +86,19 @@ void loop()
         }
 
 */
+
+String getValue(String data, char separator, int index)
+{
+    int found = 0;
+    int strIndex[] = { 0, -1 };
+    int maxIndex = data.length() - 1;
+
+    for (int i = 0; i <= maxIndex && found <= index; i++) {
+        if (data.charAt(i) == separator || i == maxIndex) {
+            found++;
+            strIndex[0] = strIndex[1] + 1;
+            strIndex[1] = (i == maxIndex) ? i+1 : i;
+        }
+    }
+    return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }

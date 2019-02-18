@@ -7,27 +7,36 @@ import threading
 import time
 import serial
 
-ser = serial.Serial(
-    port='/dev/cu.usbmodem142101',
-    baudrate=9600,
-)
-if ser.isOpen():
-    ser.close()
-ser.open()
-ser.isOpen()
+from random import randint
 
+port = '/dev/cu.usbmodem144101'
+baud = 9600
+
+serial_port = serial.Serial(port, baud, timeout=0)
+
+def handle_data(data):
+    print(data)
+
+def read_from_port(ser):
+
+    while True:
+        reading = ser.readline().decode()
+        if(len(reading) != 0):
+            handle_data(reading)
+'''            
+def write_to_port(ser,value):
+    while True:
+        rand = randint(0,100)
+        writingString = '0,'+ str(rand) + ',255'
+        ser.write(str.encode(writingString))
+        time.sleep(2)
+'''       
+def writeValue(value):
+    serial_port.write(str.encode(value))
+    
+thread = threading.Thread(target=read_from_port, args=(serial_port,))
+thread.start()
 time.sleep(2)
-ser.write(b'0,100,255')
+writeValue("0,90,255")
 
-def readSerial():
-    while True:
-        ser_bytes = ser.readline()
-        print(ser_bytes)
-
-def writeSerial():
-    while True:
-        com = input('Command:')
-        ser.write(str.encode(com))
-
-threading.Thread(target=readSerial()).start()
 #threading.Thread(target=writeSerial()).start()

@@ -32,16 +32,16 @@ while True:
 
 
         # i = axis number
-        # axes = value of the axis(i) 
+        # axes = value of the axis(i)
         for i in range( axes ):
             
             axis = joystick.get_axis( i )
             
             if (axis > -0.1 and axis < 0.1):
                 axis = 0
-                    if (i > 3):
-                        axis+=1
-                        axis = axis/2
+                if (i > 3):
+                    axis+=1
+                    axis = axis/2
                 if (abs(axis) > 0):
                     
                     #Changes axis values from -1 to 1 into 0-100

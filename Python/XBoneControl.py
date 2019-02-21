@@ -29,7 +29,7 @@ while True:
                     writeValue("0,90,0")
                 if(i == 11):
                     print("11")
-                    writeValue("0,20,1")
+                    writeValue("0,90,1")
                 if(i == 4):
                     pygame.quit()
 
@@ -69,13 +69,13 @@ while True:
                         #doMovementForward(axis)
                         print("forward: ")
                         print(axis)
-                        passingString = "0," + axis + ",0"
+                        passingString = "0," + str(axis) + ",0"
                         writeValue(passingString)
                     elif (axis > 50):
                         #doMovementBackward(axis)
                         print("backward: ")
                         print(axis)
-                        passingString = "0," + axis + ",1"
+                        passingString = "0," + str(axis) + ",1"
                         writeValue(passingString)
 
 

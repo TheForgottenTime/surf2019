@@ -54,19 +54,10 @@ void loop() {
 void changeThrottle(int m, int t)
 {
   printStuff("Setting Motor ",m," to throttle ",t);
-  int delta = 1;    //the step size
-  if(t < currentThrottle[m]) {
-    delta = -1;
-  }
-
-  //Step by one until the correct value is reached
-  while(true) {
-    if(currentThrottle[m] == t) { break; }
-    currentThrottle[m] += delta;
-    printStuff("Motor: ",m," Throttle: ",currentThrottle[m]);
-    escs[m].write(currentThrottle[m]);
-    delay(throttleChangeDelay);
-  }
+  if(currentThrottle[m] == t) { break; }
+  currentThrottle[m] = t;
+  printStuff("Motor: ",m," Throttle: ",currentThrottle[m]);
+  escs[m].write(currentThrottle[m]);
 }
 
 //Make the throttle values between 0 and 180

@@ -9,7 +9,7 @@ import serial
 
 from random import randint
 
-port = '/dev/cu.usbmodem141101'
+port = '/dev/cu.usbmodem144201'
 baud = 9600
 
 serial_port = serial.Serial(port, baud, timeout=0)

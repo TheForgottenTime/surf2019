@@ -3,6 +3,7 @@ from arduinoSerialCommunicator import writeValue
 
 pygame.init()
 pygame.joystick.init()
+clock = pygame.time.Clock()
 
 while True:
     
@@ -69,16 +70,16 @@ while True:
                         #doMovementForward(axis)
                         print("forward: ")
                         print(axis)
-                        passingString = "0," + str(axis) + ",0"
+                        passingString = "0," + str(int(axis)) + ",0"
                         writeValue(passingString)
                     elif (axis > 50):
                         #doMovementBackward(axis)
                         print("backward: ")
                         print(axis)
-                        passingString = "0," + str(axis) + ",1"
+                        passingString = "0," + str(int(axis)) + ",1"
                         writeValue(passingString)
 
-
+    clock.tick(1)
 
 
 

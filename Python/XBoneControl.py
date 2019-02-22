@@ -41,22 +41,22 @@ while True:
             if(button):
                 if(i == 0):
                     currentDirection = 0;
-                    toWrite = "0," + currentThrottle "," + currentDirection
+                    toWrite = "0," + str(currentThrottle) "," + str(currentDirection)
                     writeValue(toWrite)
                 if(i == 1):
                     currentDirection = 1;
-                    toWrite = "0," + currentThrottle "," + currentDirection
+                    toWrite = "0," + str(currentThrottle) "," + str(currentDirection)
                     writeValue(toWrite)
                 if(i == 2):
                     currentThrottle -= 10;
-                    toWrite = "0," + currentThrottle "," + currentDirection
+                    toWrite = "0," + str(currentThrottle) "," + str(currentDirection)
                     writeValue(toWrite)
                 if(i == 3):
                     currentThrottle += 10;
-                    toWrite = "0," + currentThrottle "," + currentDirection
+                    toWrite = "0," + str(currentThrottle) "," + str(currentDirection)
                     writeValue(toWrite)
                 if(i == 4):
-                    toWrite = "0," + baseThrottle "," + currentDirection
+                    toWrite = "0," + str(baseThrottle) "," + str(currentDirection)
                     writeValue(toWrite)
                     pygame.quit()
 

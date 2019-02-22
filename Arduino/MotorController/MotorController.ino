@@ -2,6 +2,8 @@
 
 #include <Servo.h>
 
+int lowerBound = 59;
+
 Servo escs[6];
 Servo directions[2];
 
@@ -13,7 +15,7 @@ int directionPins[2] = {4,5};           //Set the pin numbers that control the d
 int minPulseRate = 500;
 int maxPulseRate = 1500;
 int throttleChangeDelay = 100;
-int currentThrottle[6] = {0,0,90,90,90,90};   //The initial throttle of each motor
+int currentThrottle[6] = {lowerBound,0,90,90,90,90};   //The initial throttle of each motor
 
 //================================ SETUP =========================================================
 void setup() {
@@ -81,20 +83,10 @@ void loop() {
 //================================ CHANGE THROTTLE =================================================
 void changeThrottle(int m, int t)
 {
-  printStuff("Setting Motor ",m," to throttle ",t);
-  int delta = 1;    //the step size
-  if(t < currentThrottle[m]) {
-    delta = -1;
-  }
-
-  //Step by one until the correct value is reached
-  while(true) {
-    if(currentThrottle[m] == t) { break; }
-      currentThrottle[m] += delta;
+      map(t, 0, 180, lowerBound, 180);
+      currentThrottle[m] = t;
       printStuff("Motor: ",m," Throttle: ",currentThrottle[m]);
       escs[m].write(currentThrottle[m]);
-      delay(throttleChangeDelay);
-  }
 }
 //================================ NORMALIZE ========================================================
 //Make the throttle values between 0 and 180

@@ -5,6 +5,20 @@ pygame.init()
 pygame.joystick.init()
 clock = pygame.time.Clock()
 
+baseThrottle = 59;
+currentThrottle = baseThrottle;
+currentDirection = 0;
+def translate(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = float(value - leftMin) / float(leftSpan)
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
+
 while True:
     
     joystick_count = pygame.joystick.get_count()
@@ -25,15 +39,26 @@ while True:
         for i in range( buttons ):
             button = joystick.get_button( i )
             if(button):
-                if(i == 12):
-                    print("12")
-                    writeValue("0,90,0")
-                if(i == 11):
-                    print("11")
-                    writeValue("0,90,1")
+                if(i == 0):
+                    currentDirection = 0;
+                    toWrite = "0," + currentThrottle "," + currentDirection
+                    writeValue(toWrite)
+                if(i == 1):
+                    currentDirection = 1;
+                    toWrite = "0," + currentThrottle "," + currentDirection
+                    writeValue(toWrite)
+                if(i == 2):
+                    currentThrottle -= 10;
+                    toWrite = "0," + currentThrottle "," + currentDirection
+                    writeValue(toWrite)
+                if(i == 3):
+                    currentThrottle += 10;
+                    toWrite = "0," + currentThrottle "," + currentDirection
+                    writeValue(toWrite)
                 if(i == 4):
+                    toWrite = "0," + baseThrottle "," + currentDirection
+                    writeValue(toWrite)
                     pygame.quit()
-
 
         # i = axis number
         # axes = value of the axis(i)
@@ -70,16 +95,18 @@ while True:
                         #doMovementForward(axis)
                         print("forward: ")
                         print(axis)
-                        passingString = "0," + str(int(axis)) + ",0"
+                        passingString = "0," + str(int(translate(axis, 0, 49, 1, 180))) + ",0"
                         writeValue(passingString)
                     elif (axis > 50):
                         #doMovementBackward(axis)
                         print("backward: ")
                         print(axis)
-                        passingString = "0," + str(int(axis)) + ",1"
+                        passingString = "0," + str(int(translate(axis, 51, 100, 1, 180))) + ",1"
                         writeValue(passingString)
 
     clock.tick(1)
+
+
 
 
 

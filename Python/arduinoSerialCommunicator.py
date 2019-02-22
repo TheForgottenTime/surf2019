@@ -9,7 +9,7 @@ import serial
 
 from random import randint
 
-STARTUP_COMMAND_MOTOR0 = "0,64,0"
+STARTUP_COMMAND_MOTOR0 = "0,59,0"
 
 port = '/dev/cu.usbmodem144201'
 baud = 9600

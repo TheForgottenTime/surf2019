@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "port": "/dev/cu.usbmodem14101",
-    "sketch": "Arduino/arduinosoftware/arduinosoftware.ino"
+    "port": "/dev/cu.usbmodem144101",
+    "sketch": "Arduino/MotorController/MotorController.ino",
+    "programmer": "AVR ISP"
 }

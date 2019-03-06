@@ -8,13 +8,14 @@ import time
 import serial
 
 from random import randint
+from connectToArduino import getSerialPort
 
 STARTUP_COMMAND_MOTOR0 = "0,59,0"
 
-port = '/dev/cu.usbmodem144201'
-baud = 9600
+#port = '/dev/cu.usbmodem144101'
+#baud = 9600
 
-serial_port = serial.Serial(port, baud, timeout=0)
+serial_port = getSerialPort()
 
 def handle_data(data):
     print(data)

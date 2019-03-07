@@ -1,6 +1,16 @@
 // Dont forget to ground the arduino with the battery
+/*
+ * 2400-544=1856
+ * 1856/180=10.311
+ * 10.311*44=453.66
+ * 453.68+544=997.68us
+ * Shows the motor will turn on at 1ms
+ */
 
-#include <Servo.h>
+#include <Servo.h>  servo.write sets the frequency of pulse being sent to the esc. The Pheonix edge requires
+// a constant pulse rate, changing duty cycle instead to alter the speed of the motor. Without the ability to
+// alter the Duty Cylce instead of the pulse rate, we cant control the esc, so we cannot use SERVO.h, but
+// instead use PWM functions (8kz pulse rate).
 
 Servo escs[6];
 Servo directions[2];
@@ -10,8 +20,8 @@ int escPins[6] = {9,10,-1,-1,-1,-1};    //Set the pin numbers for motors. Must b
 int directionPins[2] = {4,5};           //Set the pin numbers that control the direction of the big motors. Must be PWM
 //===============================================================================================
 
-int minPulseRate = 500;
-int maxPulseRate = 1500;
+int minPulseWidth = 1000;
+int maxPulseWidth = 1100;
 int throttleChangeDelay = 100;
 int currentThrottle[6] = {0,0,90,90,90,90};   //The initial throttle of each motor
 
@@ -24,7 +34,7 @@ void setup() {
   for(int i=0; i<6; i++)
   {
     if(escPins[i] != -1) {
-      escs[i].attach(escPins[i], minPulseRate, maxPulseRate);
+      escs[i].attach(escPins[i], minPulseWidth, maxPulseWidth);
       escs[i].write(currentThrottle[i]);
       printStuff("[SETUP] Attached Motor ", i, " to pin ", escPins[i]);
     }
@@ -55,8 +65,12 @@ void loop() {
       
       //Change the direction if necessary
       if(motor == 0 or motor == 1) {
-        if(dir == 0 or dir == 1) {
-          directions[motor].write(dir);
+        if(dir == 0) {
+          directions[motor].write(0);
+          printStuff("Setting Motor ",motor," to direction ",dir);
+        }
+        else if(dir==1) {
+          directions[motor].write(180);
           printStuff("Setting Motor ",motor," to direction ",dir);
         }
         else {

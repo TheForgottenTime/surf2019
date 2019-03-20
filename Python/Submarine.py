@@ -1,5 +1,6 @@
 
 from arduinoSerialCommunicator import writeValue
+import time
 
 class Submarine(object):
 	"""
@@ -11,14 +12,52 @@ class Submarine(object):
 		writeValue(STARTUP_COMMAND_MOTOR0)
 		#self.color = color
 
-	def armHovers(self):
-		print("Hover motors armed")
+	def goForward(self, speed):
+		writeValue(0 + "," + str(speed) + "," + 0)
+		writeValue(1 + "," + str(speed) + "," + 0)
+		print("Going forward")
 
-	def armDrivers(self):
-		print("Driver motors arrmed")
+	def goReverse(self, motor, speed):
+		writeValue(0 + "," + str(speed) + "," + 1)
+		writeValue(1 + "," + str(speed) + "," + 1)
+		print("Going backwards")
 
-	def accelarate(self):
-		print("accelarating...")
-		"accelarator functionality here"
+	def goTurnLeft(self):
+		writeValue(0 + "," + str(speed) + "," + 1)
+		writeValue(1 + "," + str(speed) + "," + 0)
+		sleep(2)
+		print("Turning left")
 
-		" gear related functionality here"
+	def goTurnRight(self):
+		writeValue(1 + "," + str(speed) + "," + 0)
+		writeValue(0 + "," + str(speed) + "," + 1)
+		sleep(2)
+		print("Turning right")
+
+	def goDown(self):
+		writeValue(2 + "," + 45 + "," 0)
+		writeValue(3 + "," + 45 + "," 0)
+		writeValue(4 + "," + 45 + "," 0)
+		writeValue(5 + "," + 45 + "," 0)
+		print("Going up")
+
+	def goUp(self):
+		writeValue(2 + "," + 135 + "," 0)
+		writeValue(3 + "," + 135 + "," 0)
+		writeValue(4 + "," + 135 + "," 0)
+		writeValue(5 + "," + 135 + "," 0)
+		print("Going down")
+
+	def doABarrelRollClockwise(self):
+		writeValue(2 + "," + 180 + "," 0)
+		writeValue(3 + "," + 1 + "," 0)
+		writeValue(4 + "," + 180 + "," 0)
+		writeValue(5 + "," + 1 + "," 0)
+		print("Doing a barrel roll")
+		
+	def doABarrelRollCounterClockwise(self):
+		writeValue(2 + "," + 1 + "," 0)
+		writeValue(3 + "," + 180 + "," 0)
+		writeValue(4 + "," + 1 + "," 0)
+		writeValue(5 + "," + 180 + "," 0)
+		print("Doing a barrel roll")

@@ -16,7 +16,7 @@ Servo escs[6];
 Servo directions[2];
 
 //===============================================================================================
-int escPins[6] = {9,10,-1,-1,-1,-1};    //Set the pin numbers for motors. Must be PWM. First two have directions. Set to -1 if not connected
+int escPins[6] = {9,10,2,3,4,5};    //Set the pin numbers for motors. Must be PWM. First two have directions. Set to -1 if not connected
 int directionPins[2] = {4,5};           //Set the pin numbers that control the direction of the big motors. Must be PWM
 //===============================================================================================
 

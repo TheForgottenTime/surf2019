@@ -62,10 +62,10 @@ void changeThrottle(int m, int t)
   //Step by one until the correct value is reached
   while(true) {
     if(currentThrottle[m] == t) { break; }
-    currentThrottle[m] += delta;
+    currentThrottle[m] = t;
     printStuff("Motor: ",m," Throttle: ",currentThrottle[m]);
     escs[m].write(currentThrottle[m]);
-    delay(throttleChangeDelay);
+    //delay(throttleChangeDelay);
   }
 }
 

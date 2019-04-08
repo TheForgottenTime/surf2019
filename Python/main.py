@@ -1,3 +1,8 @@
 from Submarine import Submarine
+import time
 
-thisSub = Submarine
+thisSub = Submarine()
+time.sleep(2)
+
+thisSub.goReverse(15)
+

@@ -69,12 +69,9 @@ void loop() {
           directions[motor].write(0);
           printStuff("Setting Motor ",motor," to direction ",dir);
         }
-        else if(dir==1) {
+        else {
           directions[motor].write(180);
           printStuff("Setting Motor ",motor," to direction ",dir);
-        }
-        else {
-          Serial.println("Direction out of range. Ignoring.");
         }
       }
 

@@ -9,9 +9,8 @@ import serial
 
 from random import randint
 
-STARTUP_COMMAND_MOTOR0 = "0,64,0"
 
-port = '/dev/cu.usbmodem144201'
+port = '/dev/cu.usbmodem144101'
 baud = 9600
 
 serial_port = serial.Serial(port, baud, timeout=0)
@@ -39,6 +38,5 @@ def writeValue(value):
 thread = threading.Thread(target=read_from_port, args=(serial_port,))
 thread.start()
 time.sleep(2)
-writeValue(STARTUP_COMMAND_MOTOR0)
 
 #threading.Thread(target=writeSerial()).start()

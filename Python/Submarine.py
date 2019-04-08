@@ -13,12 +13,12 @@ class Submarine(object):
 
 	def goForward(self, speed):
 		writeValue("0," + str(speed) + ",0")
-		writeValue("1," + str(speed) + ",0")
+		#writeValue("1," + str(speed) + ",0")
 		print("Going forward")
 
 	def goReverse(self, speed):
 		writeValue("0," + str(speed) + ",1")
-		writeValue("1," + str(speed) + ",1")
+		#writeValue("1," + str(speed) + ",1")
 		print("Going backwards")
 		print("0," + str(speed) + ",1")
 

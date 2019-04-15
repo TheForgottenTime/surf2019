@@ -22,9 +22,8 @@ int directionPins[2] = {4,5};           //Set the pin numbers that control the d
 
 int minPulseWidth = 1000;
 int maxPulseWidth = 1100;
-int throttleChangeDelay = 100;
 int currentThrottle[6] = {0,0,90,90,90,90};   //The initial throttle of each motor
-
+int currentDirections[2] = {0,0};
 //================================ SETUP =========================================================
 void setup() {
   Serial.begin(9600);
@@ -57,73 +56,30 @@ void loop() {
     int commaIndex1 = input.indexOf(',');
     int commaIndex2 = input.indexOf(',',commaIndex1+1);
     int motor = (input.substring(0,commaIndex1)).toInt();
-    int throttle = normalize((input.substring(commaIndex1+1,commaIndex2)).toInt());
+    int throttle = (input.substring(commaIndex1+1,commaIndex2)).toInt();
     int dir = (input.substring(commaIndex2+1)).toInt();
 
-    //First check if motor is connected
-    if(escPins[motor] != -1 or motor < 0 or motor > 5) {
-      
-      //Change the direction if necessary
-      if(motor == 0 or motor == 1) {
-        if(dir == 0) {
-          directions[motor].write(0);
-          printStuff("Setting Motor ",motor," to direction ",dir);
-        }
-        else {
-          directions[motor].write(180);
-          printStuff("Setting Motor ",motor," to direction ",dir);
-        }
-      }
-
-      //If the throttle has changed then proceed to change it
-      if(throttle != currentThrottle[motor]) {
-        changeThrottle(motor,throttle);
-      }
-      else {
-        printStuff("Motor ",motor," already at throttle ",throttle);
-      }
+    //update the arrays
+    if(motor < 2){
+      currentDirections[motor] = dir;
     }
-    else {
-      Serial.println("[ERROR] Motor not connected");
-    }
+    currentThrottle[motor] = throttle;
   }
+
+  changeThrottle(0);
+  changeThrottle(1);
+  changeThrottle(2);
+  changeThrottle(3);
+  changeThrottle(4);
+  changeThrottle(5);
 
 }
 //================================ CHANGE THROTTLE =================================================
-void changeThrottle(int m, int t)
+void changeThrottle(int motor)
 {
-  printStuff("Setting Motor ",m," to throttle ",t);
-  //Step by one until the correct value is reached
-  currentThrottle[m] = t;
-  escs[m].write(currentThrottle[m]);
-  /*
-  while(true) {
-    if(currentThrottle[m] == t) { break; }
-      currentThrottle[m] += delta;
-      printStuff("Motor: ",m," Throttle: ",currentThrottle[m]);
-      escs[m].write(currentThrottle[m]);
-      delay(throttleChangeDelay);
+  if(m < 2){
+    directions[motor].write(currentDirections[motor]*180);
   }
-  */
+  escs[m].write(currentThrottle[motor]);
 }
 //================================ NORMALIZE ========================================================
-//Make the throttle values between 0 and 180
-int normalize(int t)
-{
-  if(t < 0) {
-    return 0;
-  }
-  else if(t > 180) {
-    return 180;
-  }
-  return t;
-}
-
-//==================================== PRINT =========================================================
-//Arduino was being difficult printing strings and ints together
-void printStuff(const String one,const int two, const String three, const int four)
-{
-  String two_s = String(two);
-  String four_s = String(four);
-  Serial.println(one + two_s + three + four_s);
-}

@@ -93,12 +93,10 @@ void loop() {
 void changeThrottle(int m, int t)
 {
   printStuff("Setting Motor ",m," to throttle ",t);
-  int delta = 1;    //the step size
-  if(t < currentThrottle[m]) {
-    delta = -1;
-  }
-
   //Step by one until the correct value is reached
+  currentThrottle[m] = t;
+  escs[m].write(currentThrottle[m]);
+  /*
   while(true) {
     if(currentThrottle[m] == t) { break; }
       currentThrottle[m] += delta;
@@ -106,6 +104,7 @@ void changeThrottle(int m, int t)
       escs[m].write(currentThrottle[m]);
       delay(throttleChangeDelay);
   }
+  */
 }
 //================================ NORMALIZE ========================================================
 //Make the throttle values between 0 and 180

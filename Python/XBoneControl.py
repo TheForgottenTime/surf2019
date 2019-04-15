@@ -1,9 +1,14 @@
 import pygame
-from arduinoSerialCommunicator import writeValue
+from Submarine import Submarine
+import time
+
 
 pygame.init()
 pygame.joystick.init()
 clock = pygame.time.Clock()
+
+thisSub = Submarine()
+time.sleep(3)
 
 while True:
     
@@ -27,10 +32,10 @@ while True:
             if(button):
                 if(i == 12):
                     print("12")
-                    writeValue("0,90,0")
+                    #writeValue("0,90,0")
                 if(i == 11):
                     print("11")
-                    writeValue("0,90,1")
+                    #writeValue("0,90,1")
                 if(i == 4):
                     pygame.quit()
 
@@ -48,6 +53,7 @@ while True:
                 if (i > 3):
                     axis+=1
                     axis = axis/2
+                    print("Test")
             if (abs(axis) > 0):
                 
                 #Changes axis values from -1 to 1 into 0-100
@@ -69,15 +75,17 @@ while True:
                     if (axis < 50):
                         #doMovementForward(axis)
                         print("forward: ")
+                        axis = (100-axis)/6
                         print(axis)
-                        passingString = "0," + str(int(axis)) + ",0"
-                        writeValue(passingString)
+                        thisSub.goForward(axis)
+                        #writeValue(passingString)
                     elif (axis > 50):
                         #doMovementBackward(axis)
                         print("backward: ")
+                        axis = (axis)/6
                         print(axis)
-                        passingString = "0," + str(int(axis)) + ",1"
-                        writeValue(passingString)
+                        thisSub.goReverse(axis)
+                        #writeValue(passingString)
 
     clock.tick(1)
 

@@ -16,7 +16,7 @@ Servo escs[6];
 Servo directions[2];
 
 //===============================================================================================
-int escPins[6] = {9,10,2,3,4,5};    //Set the pin numbers for motors. Must be PWM. First two have directions. Set to -1 if not connected
+int escPins[6] = {9,10,0,1,2,3};    //Set the pin numbers for motors. Must be PWM. First two have directions. Set to -1 if not connected
 int directionPins[2] = {4,5};           //Set the pin numbers that control the direction of the big motors. Must be PWM
 //===============================================================================================
 
@@ -35,14 +35,12 @@ void setup() {
     if(escPins[i] != -1) {
       escs[i].attach(escPins[i], minPulseWidth, maxPulseWidth);
       escs[i].write(currentThrottle[i]);
-      printStuff("[SETUP] Attached Motor ", i, " to pin ", escPins[i]);
     }
   }
   //Attach direction to the correct pins
   for(int i=0; i<2; i++) {
     if(directionPins[i] != -1) {
       directions[i].attach(directionPins[i]);
-      printStuff("[SETUP] Attached direction ",i, " to pin ",directionPins[i]);
     }
   }
   Serial.println("Usage: {Motor Number 0-5},{Throttle Position 0-180},{[Optional] Direction 0-1}");
@@ -77,9 +75,9 @@ void loop() {
 //================================ CHANGE THROTTLE =================================================
 void changeThrottle(int motor)
 {
-  if(m < 2){
+  if(motor < 2){
     directions[motor].write(currentDirections[motor]*180);
   }
-  escs[m].write(currentThrottle[motor]);
+  escs[motor].write(currentThrottle[motor]);
 }
 //================================ NORMALIZE ========================================================

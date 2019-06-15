@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.5/site-packages/serial/serialposix.py", line 265, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/cu.usbmodem144101'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "main.py", line 1, in <module>
+    from Submarine import Submarine
+  File "/home/pi/Desktop/surf2019-newVersion/Python/Submarine.py", line 2, in <module>
+    from arduinoSerialCommunicator import writeValue
+  File "/home/pi/Desktop/surf2019-newVersion/Python/arduinoSerialCommunicator.py", line 16, in <module>
+    serial_port = serial.Serial(port, baud, timeout=0)
+  File "/home/pi/.local/lib/python3.5/site-packages/serial/serialutil.py", line 240, in __init__
+    self.open()
+  File "/home/pi/.local/lib/python3.5/site-packages/serial/serialposix.py", line 268, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/cu.usbmodem144101: [Errno 2] No such file or directory: '/dev/cu.usbmodem144101'

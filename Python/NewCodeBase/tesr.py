@@ -11,14 +11,14 @@ GPIO.setup(Motor1A, GPIO.OUT)
 GPIO.setup(Motor1B, GPIO.OUT)
 GPIO.setup(Motor1E, GPIO.OUT)
 
-print "Turning motor on"
+print("Turning motor on")
 GPIO.output(Motor1A, GPIO.HIGH)
 GPIO.output(Motor1B, GPIO.LOW)
 GPIO.output(Motor1E, GPIO.HIGH)
 
 sleep(2)
 
-print "Stopping motor"
+print("Stopping motor")
 GPIO.output(Motor1E, GPIO.LOW)
 
 GPIO.cleanup()

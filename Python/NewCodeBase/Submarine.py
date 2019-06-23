@@ -10,13 +10,13 @@ ldp = 8 #Left motor direction pin
 rdp = 9 #Right motor direction pin
 
 #Init the pins with PWM at 50HZ
-lm = GPIO.PWM(lmp, 50)
-rm = GPIO.PWM(rmp, 50)
-lmd = GPIO.PWM(ldp, 50)
-rmd = GPIO.PWM(rdp, 50)
+
 
 class Submarine(object):
-
+    lm = None
+    rm = None
+    lmd = None
+    rmd = None
     def __init__(self):
         #threading.Thread.__init__(self)
         #self.pin_stop = threading.Event()
@@ -25,6 +25,10 @@ class Submarine(object):
         GPIO.setup(rmp, GPIO.OUT)
         GPIO.setup(ldp, GPIO.OUT)
         GPIO.setup(rdp, GPIO.OUT)
+        lm = GPIO.PWM(lmp, 50)
+rm = GPIO.PWM(rmp, 50)
+lmd = GPIO.PWM(ldp, 50)
+rmd = GPIO.PWM(rdp, 50)
         #self.__thread = threading.Thread(name='ledblink',target=self.__blink_pin)
         #self.__thread.start()
 

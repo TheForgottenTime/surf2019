@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "port": "/dev/cu.usbmodem14101",
-    "sketch": "Arduino/arduinosoftware/arduinosoftware.ino"
+    "sketch": "Arduino\\MotorController\\MotorController.ino"
 }

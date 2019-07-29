@@ -7,7 +7,7 @@ import serial.tools.list_ports
 
 
 ser = serial.Serial(
-    port='/dev/tty/ACMO0',
+    port='/dev/ttyACMO0',
     baudrate=9600
 )
 

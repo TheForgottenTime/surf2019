@@ -28,19 +28,20 @@ address = 0x04
 def writeNumber(value):
     # bus.write_byte(address, value)
     # bus.write_byte_data(address, 0, value)
-    ser.write(inp.encode())
+    ser.write(value.encode())
     return -1
 
 
 def readNumber():
-    number = bus.read_byte_data(address, 1)
+    number = ser.readline()
+    number = number.decode()
     return number
 
 # @webiopi.macro
 
 
 def stop():
-    number = 0
+    number = '0:90&1:90'
     writeNumber(number)
     time.sleep(1)
 
@@ -48,7 +49,7 @@ def stop():
 
 
 def forward():
-    number = 1
+    number = '0:180&1:180'
     writeNumber(number)
     time.sleep(1)
 
@@ -56,7 +57,7 @@ def forward():
 
 
 def left():
-    number = 2
+    number = '0:0&1:180'
     writeNumber(number)
     time.sleep(1)
 
@@ -64,7 +65,7 @@ def left():
 
 
 def right():
-    number = 3
+    number = '0:180&1:0'
     writeNumber(number)
     time.sleep(1)
 
@@ -72,49 +73,11 @@ def right():
 
 
 def backward():
-    number = 4
+    number = '0:0&1:0'
     writeNumber(number)
     time.sleep(1)
 
 # @webiopi.macro
-
-
-def servo_centre():
-    number = 5
-    writeNumber(number)
-    time.sleep(1)
-
-# @webiopi.macro
-
-
-def servo_left():
-    number = 6
-    writeNumber(number)
-    time.sleep(1)
-
-# @webiopi.macro
-
-
-def servo_right():
-    number = 7
-    writeNumber(number)
-    time.sleep(1)
-
-# @webiopi.macro
-
-
-def led_on():
-    number = 8
-    writeNumber(number)
-    time.sleep(1)
-
-# @webiopi.macro
-
-
-def led_off():
-    number = 9
-    writeNumber(number)
-    time.sleep(1)
 
 
 # Start the webiopi server
@@ -130,11 +93,6 @@ server.addMacro(left)
 server.addMacro(right)
 server.addMacro(backward)
 server.addMacro(stop)
-server.addMacro(servo_centre)
-server.addMacro(servo_left)
-server.addMacro(servo_right)
-server.addMacro(led_on)
-server.addMacro(led_off)
 
 # Run default loop
 

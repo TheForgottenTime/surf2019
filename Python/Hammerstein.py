@@ -19,10 +19,10 @@ import os  # used to call bash sripts
 # import pigpio # pigpio is a custom module for controlling GPIO pins
 # pi = pigpio.pi #declare psuedo for pigpio commands
 
-bus = smbus.SMBus(1)  # For RPI version 1 use "bus = smbus.SMBus(0)"
+# bus = smbus.SMBus(1)  # For RPI version 1 use "bus = smbus.SMBus(0)"
 
 # Setup i2C communication address (must be the same as address set on Arduino
-address = 0x04
+# address = 0x04
 
 
 def writeNumber(value):

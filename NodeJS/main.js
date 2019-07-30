@@ -30,6 +30,7 @@ router.get('/torpedo', function (req, res) {
     });
 });
 
+router.get('/get')
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------

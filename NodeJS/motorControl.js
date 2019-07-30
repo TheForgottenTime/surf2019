@@ -4,6 +4,7 @@ var board = new five.Board(); // Connect to the Arduino using that library
 var magnetometerData = {}
 var accelerometerData = {}
 var gyroscopeData = {}
+
 board.on("ready", function () { // Once the computer is connected to the Arduino
     // Save convenient references to the LED pin and an analog pin
     // max forward 1900
@@ -14,7 +15,8 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
     escs.speed(50)
     var imu = new five.IMU({
-        controller: "BNO055"
+        controller: "BNO055",
+        enableExternalCrystal: false
     });
 
     app.get('/', function (req, res) { // what happens when we go to `/`
@@ -39,6 +41,50 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         });
     });
 
+    app.get('/goBackward', function (req, res) {
+        // Set the motors to their max speed
+        escs[0].speed(40);
+        escs[1].speed(40);
+        board.wait(2000, function () {
+            // Set the motors to the min speed (stopped)
+            escs[0].speed(50);
+            escs[1].speed(50);
+            res.send("Done")
+        });
+    });
+
+    app.get('/goUp', function (req, res) {
+        // Set the motors to their max speed
+        escs[2].speed(60);
+        escs[3].speed(60);
+        escs[4].speed(60);
+        escs[5].speed(60);
+        board.wait(2000, function () {
+            // Set the motors to the min speed (stopped)
+            escs[2].speed(50);
+            escs[3].speed(50);
+            escs[4].speed(50);
+            escs[5].speed(50);
+            res.send("Done")
+        });
+    });
+
+    app.get('/goDown', function (req, res) {
+        // Set the motors to their max speed
+        escs[2].speed(40);
+        escs[3].speed(40);
+        escs[4].speed(40);
+        escs[5].speed(40);
+        board.wait(2000, function () {
+            // Set the motors to the min speed (stopped)
+            escs[2].speed(50);
+            escs[3].speed(50);
+            escs[4].speed(50);
+            escs[5].speed(50);
+            res.send("Done")
+        });
+    });
+
     app.get('/accelerometer', function (req, res) { // what happens when someone goes to `/led/off`
         res.status(200).json(accelerometerData)
     });
@@ -55,7 +101,8 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         console.log("Server's up at http://localhost:3000!");
     });
 
-    imu.on("change", function () {
+
+    imu.on("data", function () {
         console.log("Thermometer");
         console.log("  celsius      : ", this.thermometer.celsius);
         console.log("  fahrenheit   : ", this.thermometer.fahrenheit);
@@ -110,4 +157,4 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         }
         console.log("--------------------------------------");
     });
-});
+})

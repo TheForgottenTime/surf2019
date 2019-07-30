@@ -16,7 +16,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     escs.speed(50)
     var imu = new five.IMU({
         controller: "BNO055",
-        enableExternalCrystal: false
+        enableExternalCrystal: true
     });
 
     app.get('/', function (req, res) { // what happens when we go to `/`
@@ -83,6 +83,36 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             escs[5].speed(50);
             res.send("Done")
         });
+    });
+
+    app.get('/turnLeft', function (req, res) {
+        // Set the motors to their max speed
+        escs[1].speed(60);
+        escs[2].speed(40);
+        board.wait(2000, function () {
+            // Set the motors to the min speed (stopped)
+            escs[1].speed(50);
+            escs[2].speed(50);
+            res.send("Done")
+        });
+    });
+
+    app.get('/turnRight', function (req, res) {
+        // Set the motors to their max speed
+        escs[1].speed(40);
+        escs[2].speed(60);
+        board.wait(2000, function () {
+            // Set the motors to the min speed (stopped)
+            escs[1].speed(50);
+            escs[2].speed(50);
+            res.send("Done")
+        });
+    });
+
+    app.get('/brake', function (req, res) {
+        // Set the motors to their max speed
+        escs.brake();
+        res.send("Done")
     });
 
     app.get('/accelerometer', function (req, res) { // what happens when someone goes to `/led/off`
@@ -157,4 +187,42 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         }
         console.log("--------------------------------------");
     });
+
+    function logEvery2Seconds(i) {
+        setTimeout(() => {
+            if (gyroscopeData.isCalibrated) {
+
+                //handle pitch stablization
+                if (gyroscopeData.pitch.angle < -10.00) {
+                    escs[3].speed(60)
+                    escs[4].speed(60)
+                } else if (gyroscopeData.pitch.angle > 10.00) {
+                    escs[3].speed(40)
+                    escs[4].speed(40)
+                } else {
+                    escs[3].speed(50)
+                    escs[4].speed(50)
+                }
+
+                //handle roll stablization
+                if (gyroscopeData.roll.angle < -10.00) {
+                    escs[2].speed(60)
+                    escs[3].speed(60)
+
+                } else if (gyroscopeData.roll.angle > 10.00) {
+                    escs[2].speed(40)
+                    escs[3].speed(40)
+                } else {
+                    escs[2].speed(50)
+                    escs[3].speed(50)
+                }
+            }
+            console.log('Infinite Loop Test n:', i);
+            logEvery2Seconds(++i);
+        }, 100)
+    }
+    logEvery2Seconds(0);
+
+
+
 })

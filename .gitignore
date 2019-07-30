@@ -102,3 +102,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+NodeJS/node_modules/

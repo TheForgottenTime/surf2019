@@ -18,7 +18,11 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         controller: "BNO055",
         enableExternalCrystal: true
     });
-
+    var torpedoServo = new five.Servo(44)
+    this.repl.inject({
+        servo: torpedoServo
+    });
+    //pressure sensor is 7
     app.get('/', function (req, res) { // what happens when we go to `/`
         res.send("I'm subby and im a garbage sub."); // Just send some text
     });
@@ -127,6 +131,13 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         res.status(200).json(magnetometerData)
     });
 
+    app.get('/fireTorpedo', function (req, res) {
+        torpedoServo.to(180);
+        board.wait(2000, function () {
+            torpedoServo.center();
+        })
+    });
+
     app.listen(3000, function () { // Actually turn the server on
         console.log("Server's up at http://localhost:3000!");
     });
@@ -217,7 +228,6 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
                     escs[3].speed(50)
                 }
             }
-            console.log('Infinite Loop Test n:', i);
             logEvery2Seconds(++i);
         }, 100)
     }

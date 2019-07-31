@@ -131,11 +131,22 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         res.status(200).json(magnetometerData)
     });
 
+    app.get('/depth', function (req, res) {
+        var analog = new five.Pin("A7");
+
+        // Query the analog pin for its current state.
+        analog.query(function (state) {
+            console.log("Depth: " + state.value);
+            res.status(200).send(state.value.toString())
+        });
+    })
+
     app.get('/fireTorpedo', function (req, res) {
         torpedoServo.to(180);
         board.wait(2000, function () {
             torpedoServo.center();
         })
+        res.send("Fired away captain!")
     });
 
     app.listen(3000, function () { // Actually turn the server on

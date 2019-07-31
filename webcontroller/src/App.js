@@ -13,7 +13,7 @@ class App extends Component {
       case 27:
         console.log("Escape");
         axios
-          .get("http://localhost:3000/brake")
+          .get("raspberrypi.local:3000/brake")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -26,7 +26,7 @@ class App extends Component {
       case 87:
         console.log("W");
         axios
-          .get("http://localhost:3000/goForward")
+          .get("raspberrypi.local:3000/goForward")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -39,7 +39,7 @@ class App extends Component {
       case 65:
         console.log("A");
         axios
-          .get("http://localhost:3000/turnLeft")
+          .get("raspberrypi.local:3000/turnLeft")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -52,7 +52,7 @@ class App extends Component {
       case 83:
         console.log("S");
         axios
-          .get("http://localhost:3000/goBackward")
+          .get("raspberrypi.local:3000/goBackward")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -65,7 +65,7 @@ class App extends Component {
       case 68:
         console.log("D");
         axios
-          .get("http://localhost:3000/turnRight")
+          .get("raspberrypi.local:3000/turnRight")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -78,7 +78,7 @@ class App extends Component {
       case 16:
         console.log("Shift");
         axios
-          .get("http://localhost:3000/goUp")
+          .get("raspberrypi.local:3000/goUp")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -91,7 +91,7 @@ class App extends Component {
       case 17:
         console.log("Ctrl");
         axios
-          .get("http://localhost:3000/goDown")
+          .get("raspberrypi.local:3000/goDown")
           .then(function(response) {
             // handle success
             console.log(response);
@@ -104,7 +104,7 @@ class App extends Component {
       case 32:
         console.log("Space");
         axios
-          .get("http://localhost:3000/fireTorpedo")
+          .get("raspberrypi.local:3000/fireTorpedo")
           .then(function(response) {
             // handle success
             console.log(response);

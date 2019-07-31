@@ -49,7 +49,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     app.get('/goForward', function (req, res) {
         // Set the motors to their max speed
         escs[0].speed(60);
-        escs[1].speed(60);
+        escs[1].speed(40);
         board.wait(2000, function () {
             // Set the motors to the min speed (stopped)
             escs[0].speed(50);
@@ -61,7 +61,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     app.get('/goBackward', function (req, res) {
         // Set the motors to their max speed
         escs[0].speed(40);
-        escs[1].speed(40);
+        escs[1].speed(60);
         board.wait(2000, function () {
             // Set the motors to the min speed (stopped)
             escs[0].speed(50);
@@ -72,10 +72,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
     app.get('/goUp', function (req, res) {
         // Set the motors to their max speed
-        escs[2].speed(60);
-        escs[3].speed(60);
-        escs[4].speed(60);
-        escs[5].speed(60);
+        escs[2].speed(80);
+        escs[3].speed(80);
+        escs[4].speed(80);
+        escs[5].speed(80);
         board.wait(2000, function () {
             // Set the motors to the min speed (stopped)
             escs[2].speed(50);
@@ -88,10 +88,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
     app.get('/goDown', function (req, res) {
         // Set the motors to their max speed
-        escs[2].speed(40);
-        escs[3].speed(40);
-        escs[4].speed(40);
-        escs[5].speed(40);
+        escs[2].speed(20);
+        escs[3].speed(20);
+        escs[4].speed(20);
+        escs[5].speed(20);
         board.wait(2000, function () {
             // Set the motors to the min speed (stopped)
             escs[2].speed(50);
@@ -223,7 +223,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         console.log("--------------------------------------");
     });
 
-    function logEvery2Seconds(i) {
+    /*  function logEvery2Seconds(i) {
         setTimeout(() => {
             if (gyroscopeData.isCalibrated) {
 
@@ -256,7 +256,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         }, 100)
     }
     logEvery2Seconds(0);
-
+ */
 
 
 })

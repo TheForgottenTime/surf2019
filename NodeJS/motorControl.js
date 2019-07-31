@@ -1,5 +1,6 @@
 var five = require("johnny-five"); // Load the node library that lets us talk JS to the Arduino
 var board = new five.Board(); // Connect to the Arduino using that library
+var cors = require('cors');
 
 var magnetometerData = {}
 var accelerometerData = {}
@@ -14,6 +15,18 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     var app = express(); // And start up that server
     var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
     escs.speed(50)
+
+    app.use(function (req, res, next) {
+        /*var err = new Error('Not Found');
+         err.status = 404;
+         next(err);*/
+
+        // Website you wish to allow to connect
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        // Pass to next layer of middleware
+        next();
+    });
+
     var imu = new five.IMU({
         controller: "BNO055",
         enableExternalCrystal: true
@@ -116,7 +129,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     app.get('/brake', function (req, res) {
         // Set the motors to their max speed
         escs.brake();
-        res.send("Done")
+        res.send("WHY WOULD YOU DO THIS TO ME, CAPTAIN!")
     });
 
     app.get('/accelerometer', function (req, res) { // what happens when someone goes to `/led/off`

@@ -12,7 +12,7 @@ var goingLeft = false
 var goingRight = false
 var goingDown = false
 var goingUp = false
-
+var intendedHeading = 0
 board.on("ready", function () { // Once the computer is connected to the Arduino
     // Save convenient references to the LED pin and an analog pin
     // max forward 1900
@@ -314,13 +314,15 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         magnetometerData = {
             heading: Math.floor(this.magnetometer.heading),
         }
+
         console.log("--------------------------------------");
     });
 
 
     async function goThroughGate() {
-
-        await sleep(60000)
+        await sleep(10000)
+        intendedHeading = magnetometerData.heading
+        await sleep(50000)
 
         //Go down
         escs[2].speed(20);

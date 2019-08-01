@@ -21,60 +21,60 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     var express = require('express'); // Load the library we'll use to set up a basic webserver
     var app = express(); // And start up that server
     var expressWs = require('express-ws')(app);
-    //var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
+    var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
 
     //setup the repl so we can control it via command line.
     board.repl.inject({
         escs: escs
     });
-
-    var escs = new five.ESCs([{
-            controller: "PCA9685",
-            pin: 7,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        }, // Attached to an Adafruit PWM shield
-        {
-            controller: "PCA9685",
-            pin: 9,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        }, // Attached directly to the Arduino
-        {
-            controller: "PCA9685",
-            pin: 5,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        },
-        {
-            controller: "PCA9685",
-            pin: 4,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        },
-        {
-            controller: "PCA9685",
-            pin: 3,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        },
-        {
-            controller: "PCA9685",
-            pin: 2,
-            device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900],
-            neutral: 50,
-        }
-    ]);
-
+    /*
+        var escs = new five.ESCs([{
+                pin: 7,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            }, // Attached to an Adafruit PWM shield
+            {
+                pin: 9,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            }, // Attached directly to the Arduino
+            {
+                pin: 5,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            },
+            {
+                controller: "PCA9685",
+                pin: 4,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            },
+            {
+                controller: "PCA9685",
+                pin: 3,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            },
+            {
+                controller: "PCA9685",
+                pin: 2,
+                device: "FORWARD_REVERSE",
+                pwmRange: [1100, 1900],
+                neutral: 50,
+            }
+        ]);
+    */
     escs.speed(50)
 
+    app.use(cors())
+
     app.use(function (req, res, next) {
+
         next();
     });
 

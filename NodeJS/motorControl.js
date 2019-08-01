@@ -352,7 +352,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             if (gyroscopeData.isCalibrated) {
                 goThroughGate()
             } else {
-                goAfterCalibration(++i);
+                checkCalibrationStatus(++i);
             }
         }, 5000)
     }

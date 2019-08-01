@@ -319,6 +319,9 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
 
     async function goThroughGate() {
+
+        await sleep(60000)
+
         //Go down
         escs[2].speed(20);
         escs[3].speed(20);

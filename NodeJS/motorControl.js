@@ -317,6 +317,40 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         console.log("--------------------------------------");
     });
 
+
+    async function goThroughGate() {
+        //Go down
+        escs[2].speed(20);
+        escs[3].speed(20);
+        escs[4].speed(20);
+        escs[5].speed(20);
+
+        //Go forward
+        escs[0].speed(20);
+        escs[1].speed(20);
+
+        await sleep(30000)
+
+        escs[0].speed(50);
+        escs[1].speed(50);
+
+        escs[2].speed(50);
+        escs[3].speed(50);
+        escs[4].speed(50);
+        escs[5].speed(50);
+
+    }
+
+    function checkCalibrationStatus(i) {
+        setTimeout(() => {
+            if (gyroscopeData.isCalibrated) {
+                goThroughGate()
+            } else {
+                goAfterCalibration(++i);
+            }
+        }, 5000)
+    }
+    checkCalibrationStatus(0);
     /*  function logEvery2Seconds(i) {
         setTimeout(() => {
             if (gyroscopeData.isCalibrated) {

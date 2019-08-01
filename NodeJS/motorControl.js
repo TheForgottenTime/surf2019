@@ -190,10 +190,11 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     })
 
     app.get('/holdDepth', function (req, res) {
-        escs[2].speed(20);
-        escs[3].speed(20);
-        escs[4].speed(20);
-        escs[5].speed(20);
+        var speed = Number(req.query.speed)
+        escs[2].speed(speed);
+        escs[3].speed(speed);
+        escs[4].speed(speed);
+        escs[5].speed(speed);
         res.status(200).send("Done")
     })
 

@@ -6,6 +6,13 @@ var magnetometerData = {}
 var accelerometerData = {}
 var gyroscopeData = {}
 
+var goingForward = false
+var goingBackward = false
+var goingLeft = false
+var goingRight = false
+var goingDown = false
+var goingUp = false
+
 board.on("ready", function () { // Once the computer is connected to the Arduino
     // Save convenient references to the LED pin and an analog pin
     // max forward 1900
@@ -13,17 +20,31 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     // stop 1500
     var express = require('express'); // Load the library we'll use to set up a basic webserver
     var app = express(); // And start up that server
+    var expressWs = require('express-ws')(app);
     var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
+
+    //setup the repl so we can control it via command line.
+    board.repl.inject({
+        escs: escs
+    });
+    /*
+    var escs = new five.ESCs([{
+            controller: "PCA9685",
+            pin: 7,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
+        }, // Attached to an Adafruit PWM shield
+        {
+            pin: 9
+        }, // Attached directly to the Arduino
+        {
+            pin: 5
+        }
+    ]);
+    */
     escs.speed(50)
 
     app.use(function (req, res, next) {
-        /*var err = new Error('Not Found');
-         err.status = 404;
-         next(err);*/
-
-        // Website you wish to allow to connect
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        // Pass to next layer of middleware
         next();
     });
 
@@ -31,6 +52,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         controller: "BNO055",
         enableExternalCrystal: true
     });
+
     var torpedoServo = new five.Servo(44)
     this.repl.inject({
         servo: torpedoServo
@@ -47,83 +69,96 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     });
 
     app.get('/goForward', function (req, res) {
-        // Set the motors to their max speed
-        escs[0].speed(60);
-        escs[1].speed(40);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
+        if (goingForward) {
             escs[0].speed(50);
             escs[1].speed(50);
-            res.send("Done")
-        });
+            goingForward = false;
+            res.status(200).send("Done")
+        } else {
+            escs[0].speed(20);
+            escs[1].speed(20);
+            goingForward = true;
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/goBackward', function (req, res) {
-        // Set the motors to their max speed
-        escs[0].speed(40);
-        escs[1].speed(60);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
+        if (goingBackward) {
             escs[0].speed(50);
             escs[1].speed(50);
-            res.send("Done")
-        });
+            goingBackward = false;
+            res.status(200).send("Done")
+        } else {
+            escs[0].speed(80);
+            escs[1].speed(80);
+            goingBackward = true;
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/goUp', function (req, res) {
-        // Set the motors to their max speed
-        escs[2].speed(80);
-        escs[3].speed(80);
-        escs[4].speed(80);
-        escs[5].speed(80);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
+        if (goingUp) {
             escs[2].speed(50);
             escs[3].speed(50);
             escs[4].speed(50);
             escs[5].speed(50);
-            res.send("Done")
-        });
+            goingUp = false
+            res.status(200).send("Done")
+        } else {
+            escs[2].speed(80);
+            escs[3].speed(80);
+            escs[4].speed(80);
+            escs[5].speed(80);
+            goingUp = true
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/goDown', function (req, res) {
-        // Set the motors to their max speed
-        escs[2].speed(20);
-        escs[3].speed(20);
-        escs[4].speed(20);
-        escs[5].speed(20);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
-            escs[2].speed(50);
-            escs[3].speed(50);
-            escs[4].speed(50);
-            escs[5].speed(50);
-            res.send("Done")
-        });
+        if (goingDown) {
+            escs[2].speed(20);
+            escs[3].speed(20);
+            escs[4].speed(20);
+            escs[5].speed(20);
+            goingDown = false
+            res.status(200).send("Done")
+        } else {
+            escs[2].speed(80);
+            escs[3].speed(80);
+            escs[4].speed(80);
+            escs[5].speed(80);
+            goingDown = true
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/turnLeft', function (req, res) {
         // Set the motors to their max speed
-        escs[1].speed(60);
-        escs[2].speed(40);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
+        if (goingLeft) {
             escs[1].speed(50);
             escs[2].speed(50);
-            res.send("Done")
-        });
+            goingLeft = false;
+            res.status(200).send("Done")
+        } else {
+            escs[1].speed(60);
+            escs[2].speed(40);
+            goingLeft = true;
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/turnRight', function (req, res) {
-        // Set the motors to their max speed
-        escs[1].speed(40);
-        escs[2].speed(60);
-        board.wait(2000, function () {
-            // Set the motors to the min speed (stopped)
+        if (goingRight) {
             escs[1].speed(50);
             escs[2].speed(50);
-            res.send("Done")
-        });
+            goingRight = false;
+            res.status(200).send("Done")
+        } else {
+            escs[1].speed(40);
+            escs[2].speed(60);
+            goingRight = true;
+            res.status(200).send("Done")
+        }
     });
 
     app.get('/brake', function (req, res) {
@@ -154,12 +189,36 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         });
     })
 
+    app.get('/holdDepth', function (req, res) {
+        escs[2].speed(20);
+        escs[3].speed(20);
+        escs[4].speed(20);
+        escs[5].speed(20);
+        res.status(200).send("Done")
+    })
+
+    app.get('/releaseDepth', function (req, res) {
+        escs[2].speed(50);
+        escs[3].speed(50);
+        escs[4].speed(50);
+        escs[5].speed(50);
+        res.status(200).send("Done")
+    })
+
+    app.ws('/ws', function (ws, req) {
+        ws.send({
+            accelerometerData,
+            gyroscopeData,
+            magnetometerData,
+        })
+    });
+
     app.get('/fireTorpedo', function (req, res) {
         torpedoServo.to(180);
         board.wait(2000, function () {
             torpedoServo.center();
+            res.send("Fired away captain!")
         })
-        res.send("Fired away captain!")
     });
 
     app.listen(3000, function () { // Actually turn the server on

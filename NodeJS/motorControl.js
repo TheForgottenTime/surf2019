@@ -21,13 +21,13 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     var express = require('express'); // Load the library we'll use to set up a basic webserver
     var app = express(); // And start up that server
     var expressWs = require('express-ws')(app);
-    var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
+    //var escs = new five.ESCs([7, 9, 5, 4, 3, 2]);
 
     //setup the repl so we can control it via command line.
     board.repl.inject({
         escs: escs
     });
-    /*
+
     var escs = new five.ESCs([{
             controller: "PCA9685",
             pin: 7,
@@ -35,13 +35,37 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             pwmRange: [1100, 1900]
         }, // Attached to an Adafruit PWM shield
         {
-            pin: 9
+            controller: "PCA9685",
+            pin: 9,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
         }, // Attached directly to the Arduino
         {
-            pin: 5
+            controller: "PCA9685",
+            pin: 5,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
+        },
+        {
+            controller: "PCA9685",
+            pin: 4,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
+        },
+        {
+            controller: "PCA9685",
+            pin: 3,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
+        },
+        {
+            controller: "PCA9685",
+            pin: 2,
+            device: "FORWARD_REVERSE",
+            pwmRange: [1100, 1900]
         }
     ]);
-    */
+
     escs.speed(50)
 
     app.use(function (req, res, next) {
@@ -116,17 +140,21 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
     app.get('/goDown', function (req, res) {
         if (goingDown) {
-            escs[2].speed(20);
-            escs[3].speed(20);
-            escs[4].speed(20);
-            escs[5].speed(20);
+            escs[2].speed(50);
+            escs[3].speed(50);
+            escs[4].speed(50);
+            escs[5].speed(50);
             goingDown = false
             res.status(200).send("Done")
         } else {
-            escs[2].speed(80);
-            escs[3].speed(80);
-            escs[4].speed(80);
-            escs[5].speed(80);
+            //escs[2].speed(10);
+            //escs[3].speed(10);
+            //escs[4].speed(80);
+            //escs[5].speed(80);
+            escs[2].speed(15);
+            escs[3].speed(15);
+            escs[4].speed(15);
+            escs[5].speed(15);
             goingDown = true
             res.status(200).send("Done")
         }

@@ -320,9 +320,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
 
     async function goThroughGate() {
-        await sleep(10000)
-        intendedHeading = magnetometerData.heading
         await sleep(50000)
+        intendedHeading = magnetometerData.heading
+
+        await sleep(10000)
 
         //Go down
         escs[2].speed(20);
@@ -356,6 +357,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         }, 5000)
     }
     checkCalibrationStatus(0);
+
+    function correctHeading() {
+        if (Math.abs(magnetometerData.heading - intendedHeading))
+    }
     /*  function logEvery2Seconds(i) {
         setTimeout(() => {
             if (gyroscopeData.isCalibrated) {

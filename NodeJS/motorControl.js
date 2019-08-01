@@ -32,37 +32,43 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             controller: "PCA9685",
             pin: 7,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         }, // Attached to an Adafruit PWM shield
         {
             controller: "PCA9685",
             pin: 9,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         }, // Attached directly to the Arduino
         {
             controller: "PCA9685",
             pin: 5,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         },
         {
             controller: "PCA9685",
             pin: 4,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         },
         {
             controller: "PCA9685",
             pin: 3,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         },
         {
             controller: "PCA9685",
             pin: 2,
             device: "FORWARD_REVERSE",
-            pwmRange: [1100, 1900]
+            pwmRange: [1100, 1900],
+            neutral: 50,
         }
     ]);
 

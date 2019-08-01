@@ -157,10 +157,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             //escs[3].speed(10);
             //escs[4].speed(80);
             //escs[5].speed(80);
-            escs[2].speed(15);
-            escs[3].speed(15);
-            escs[4].speed(15);
-            escs[5].speed(15);
+            escs[2].speed(20);
+            escs[3].speed(20);
+            escs[4].speed(20);
+            escs[5].speed(20);
             goingDown = true
             res.status(200).send("Done")
         }

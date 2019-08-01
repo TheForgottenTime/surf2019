@@ -358,9 +358,6 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     }
     checkCalibrationStatus(0);
 
-    function correctHeading() {
-        if (Math.abs(magnetometerData.heading - intendedHeading))
-    }
     /*  function logEvery2Seconds(i) {
         setTimeout(() => {
             if (gyroscopeData.isCalibrated) {

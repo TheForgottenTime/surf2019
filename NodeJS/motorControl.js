@@ -1,7 +1,7 @@
 var five = require("johnny-five"); // Load the node library that lets us talk JS to the Arduino
 var board = new five.Board(); // Connect to the Arduino using that library
 var cors = require('cors');
-
+var sleep = require('sleep')
 var magnetometerData = {}
 var accelerometerData = {}
 var gyroscopeData = {}
@@ -14,6 +14,8 @@ var goingDown = false
 var goingUp = false
 
 var isGoingThroughGate = false
+
+
 
 var intendedHeading = 0
 board.on("ready", function () { // Once the computer is connected to the Arduino

@@ -18,6 +18,7 @@
     "i2c-bus": "^4.0.10",
     "johnny-five": "^1.2.0",
     "livecam": "^0.2.0",
+    "sleep": "^6.1.0",
     "upgrade": "^1.1.0"
   },
   "devDependencies": {

@@ -12,6 +12,9 @@ var goingLeft = false
 var goingRight = false
 var goingDown = false
 var goingUp = false
+
+var isGoingThroughGate = false
+
 var intendedHeading = 0
 board.on("ready", function () { // Once the computer is connected to the Arduino
     // Save convenient references to the LED pin and an analog pin
@@ -260,13 +263,17 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         console.log("Server's up at http://localhost:3000!");
     });
 
-    imu.on("calibrated", function () {
+    /* imu.on("calibrated", function () {
         console.log("I've been calibrated.")
         console.log("Now getting ready for the gate.")
         goThroughGate()
-    })
+    }) */
 
     imu.on("data", function () {
+        if (!isGoingThroughGate) {
+            goThroughGate()
+            isGoingThroughGate = true
+        }
         /* console.log("Thermometer");
         console.log("  celsius      : ", this.thermometer.celsius);
         console.log("  fahrenheit   : ", this.thermometer.fahrenheit);
@@ -323,6 +330,21 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         //console.log("--------------------------------------");
     });
 
+    function submerge() {
+        console.log("Submerging.")
+        escs[2].speed(20);
+        escs[3].speed(20);
+        escs[4].speed(20);
+        escs[5].speed(20);
+    }
+
+    function emerge() {
+        console.log("Emerging.")
+        escs[2].speed(50);
+        escs[3].speed(50);
+        escs[4].speed(50);
+        escs[5].speed(50);
+    }
 
     async function goThroughGate() {
         console.log("You have 50 seconds to orient me towards the direction you want to keep.")

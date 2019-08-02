@@ -349,34 +349,36 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     }
 
     async function goThroughGate() {
+
         console.log("You have 50 seconds to orient me towards the direction you want to keep.")
         setTimeout(() => {
             intendedHeading = magnetometerData.heading
-
             console.log("Heading locked, launching in 10 seconds")
-            setTimeout(() => {
-                console.log("Beginning gate run.")
-                //Go down
-                escs[2].speed(20);
-                escs[3].speed(20);
-                escs[4].speed(20);
-                escs[5].speed(20);
+        }, 50000)
 
-                //Go forward
-                escs[0].speed(20);
-                escs[1].speed(20);
-                setTimeout(() => {
-                    console.log("Concluding gate run.")
-                    escs[0].speed(50);
-                    escs[1].speed(50);
+        setTimeout(() => {
+            console.log("Beginning gate run.")
+            //Go down
+            escs[2].speed(20);
+            escs[3].speed(20);
+            escs[4].speed(20);
+            escs[5].speed(20);
 
-                    escs[2].speed(50);
-                    escs[3].speed(50);
-                    escs[4].speed(50);
-                    escs[5].speed(50);
-                }, 30000)
-            }, 10000);
-        }, 50000);
+            //Go forward
+            escs[0].speed(20);
+            escs[1].speed(20);
+        }, 60000)
+
+        setTimeout(() => {
+            console.log("Concluding gate run.")
+            escs[0].speed(50);
+            escs[1].speed(50);
+
+            escs[2].speed(50);
+            escs[3].speed(50);
+            escs[4].speed(50);
+            escs[5].speed(50);
+        }, 90000)
     }
 
 

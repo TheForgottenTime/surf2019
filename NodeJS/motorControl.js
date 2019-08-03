@@ -395,10 +395,10 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         // Query the analog pin for its current state.
         analog.query(function (state) {
             console.log("Depth: " + state.value);
-            currdepth = state.value;            
+            currdepth = state.value;
         });
 
-        if(currdepth < 105){
+        if (currdepth < 105) {
             escs[2].speed(35);
             escs[3].speed(35);
             escs[4].speed(35);
@@ -410,7 +410,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             escs[5].speed(50);
         }
 
-        
+
 
     }
 

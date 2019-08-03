@@ -389,6 +389,29 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
 
         */
 
+        var currdepth = 100;
+        var analog = new five.Pin("A7");
+
+        // Query the analog pin for its current state.
+        analog.query(function (state) {
+            console.log("Depth: " + state.value);
+            currdepth = state.value;            
+        });
+
+        if(currdepth < 105){
+            escs[2].speed(35);
+            escs[3].speed(35);
+            escs[4].speed(35);
+            escs[5].speed(35);
+        } else {
+            escs[2].speed(50);
+            escs[3].speed(50);
+            escs[4].speed(50);
+            escs[5].speed(50);
+        }
+
+        
+
     }
     function headingCorrection() {
 

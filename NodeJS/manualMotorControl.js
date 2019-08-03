@@ -272,11 +272,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     }) */
 
     imu.on("data", function () {
-        if (!isGoingThroughGate) {
-            goThroughGate()
-            isGoingThroughGate = true
-        }
-        /* console.log("Thermometer");
+/*        console.log("Thermometer");
         console.log("  celsius      : ", this.thermometer.celsius);
         console.log("  fahrenheit   : ", this.thermometer.fahrenheit);
         console.log("  kelvin       : ", this.thermometer.kelvin);
@@ -291,7 +287,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         console.log("  acceleration : ", this.accelerometer.acceleration);
         console.log("  inclination  : ", this.accelerometer.inclination);
         console.log("  orientation  : ", this.accelerometer.orientation);
-        console.log("--------------------------------------"); */
+        console.log("--------------------------------------");
         accelerometerData = {
             x: this.accelerometer.x,
             y: this.accelerometer.y,
@@ -302,7 +298,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             inclination: this.accelerometer.inclination,
             orientation: this.accelerometer.orientation
         }
-        /*  console.log("Gyroscope");
+         console.log("Gyroscope");
          console.log("  x            : ", this.gyro.x);
          console.log("  y            : ", this.gyro.y);
          console.log("  z            : ", this.gyro.z);
@@ -311,7 +307,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
          console.log("  yaw          : ", this.gyro.yaw);
          console.log("  rate         : ", this.gyro.rate);
          console.log("  isCalibrated : ", this.gyro.isCalibrated);
-         console.log("--------------------------------------"); */
+         console.log("--------------------------------------");
         gyroscopeData = {
             x: this.gyro.x,
             y: this.gyro.y,
@@ -322,14 +318,14 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             rate: this.gyro.rate,
             isCalibrated: this.gyro.isCalibrated
         }
-        /*  console.log("magnetometer");
-         console.log("  heading : ", Math.floor(this.magnetometer.heading)); */
-        // console.log("  bearing : ", this.magnetometer.bearing.name);
+         console.log("magnetometer");
+         console.log("  heading : ", Math.floor(this.magnetometer.heading)); 
+         //console.log("  bearing : ", this.magnetometer.bearing.name);
         magnetometerData = {
             heading: Math.floor(this.magnetometer.heading),
         }
 
-        //console.log("--------------------------------------");
+        //console.log("--------------------------------------");*/
     });
 
     function submerge() {
@@ -349,7 +345,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
     }
 
     async function goThroughGate() {
-        console.log("You have 10 seconds to orient me towards the direction you want to keep.")
+        console.log("You have 50 seconds to orient me towards the direction you want to keep.")
         setTimeout(() => {
             intendedHeading = magnetometerData.heading
 
@@ -357,13 +353,13 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             setTimeout(() => {
                 console.log("Beginning gate run.")
                 //Go down
-                escs[2].speed(30);
+                escs[2].speed(35);
                 escs[3].speed(35);
                 escs[4].speed(35);
-                escs[5].speed(30);
+                escs[5].speed(35);
 
                 //Go forward
-                escs[0].speed(28);
+                escs[0].speed(20);
                 escs[1].speed(20);
                 setTimeout(() => {
                     console.log("Concluding gate run.")
@@ -376,7 +372,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
                     escs[5].speed(50);
                 }, 120000)
             }, 10000);
-        }, 10000);
+        }, 50000);
     }
 
 

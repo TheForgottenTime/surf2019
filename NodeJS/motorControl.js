@@ -410,8 +410,6 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             escs[5].speed(50);
         }
 
-
-
     }
 
     function headingCorrection() {
@@ -419,18 +417,17 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         var currentHeading = magnetometerData.heading
         if (intendedHeading - currentHeading > threshold) {
             //the sub needs to turn right
-            escs[0].speed(30) //slow down the right engine
+            escs[0].speed(70) //slow down the right engine
             escs[1].speed(20) //keep the left engine at current speed
         } else if (intendedHeading - currentHeading < threshold) {
             //the sub needs to turn left
-            escs[1].speed(30) //slow down the left engine
+            escs[1].speed(70) //slow down the left engine
             escs[0].speed(20) //keep the right engine at current speed
         } else {
             //set both motors to full speed
             escs[0].speed(20)
             escs[1].speed(20)
         }
-        headingCorrection()
     }
 
     async function goThroughGate() {

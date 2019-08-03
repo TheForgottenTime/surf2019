@@ -15,7 +15,7 @@ var goingUp = false
 
 var isGoingThroughGate = false
 
-
+var currentSpeeds = [50, 50, 50, 50, 50, 50]
 
 var intendedHeading = 0
 board.on("ready", function () { // Once the computer is connected to the Arduino
@@ -347,38 +347,38 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         escs[4].speed(50);
         escs[5].speed(50);
     }
-/*
-    async function goThroughGate() {
-        console.log("You have 10 seconds to orient me towards the direction you want to keep.")
-        setTimeout(() => {
-            intendedHeading = magnetometerData.heading
-
-            console.log("Heading locked, launching in 10 seconds")
+    /*
+        async function goThroughGate() {
+            console.log("You have 10 seconds to orient me towards the direction you want to keep.")
             setTimeout(() => {
-                console.log("Beginning gate run.")
-                //Go down
-                escs[2].speed(30);
-                escs[3].speed(35);
-                escs[4].speed(35);
-                escs[5].speed(30);
+                intendedHeading = magnetometerData.heading
 
-                //Go forward
-                escs[0].speed(28);
-                escs[1].speed(20);
+                console.log("Heading locked, launching in 10 seconds")
                 setTimeout(() => {
-                    console.log("Concluding gate run.")
-                    escs[0].speed(50);
-                    escs[1].speed(50);
+                    console.log("Beginning gate run.")
+                    //Go down
+                    escs[2].speed(30);
+                    escs[3].speed(35);
+                    escs[4].speed(35);
+                    escs[5].speed(30);
 
-                    escs[2].speed(50);
-                    escs[3].speed(50);
-                    escs[4].speed(50);
-                    escs[5].speed(50);
-                }, 120000)
+                    //Go forward
+                    escs[0].speed(28);
+                    escs[1].speed(20);
+                    setTimeout(() => {
+                        console.log("Concluding gate run.")
+                        escs[0].speed(50);
+                        escs[1].speed(50);
+
+                        escs[2].speed(50);
+                        escs[3].speed(50);
+                        escs[4].speed(50);
+                        escs[5].speed(50);
+                    }, 120000)
+                }, 10000);
             }, 10000);
-        }, 10000);
-    }
-*/
+        }
+    */
 
     function depthCorrection() {
         /*
@@ -390,8 +390,24 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         */
 
     }
-    function headingCorrection() {
 
+    function headingCorrection() {
+        var threshold = 5
+        var currentHeading = magnetometerData.heading
+        if (intendedHeading - currentHeading > threshold) {
+            //the sub needs to turn right
+            escs[0].speed(30) //slow down the right engine
+            escs[1].speed(20) //keep the left engine at current speed
+        } else if (intendedHeading - currentHeading < threshold) {
+            //the sub needs to turn left
+            escs[1].speed(30) //slow down the left engine
+            escs[0].speed(20) //keep the right engine at current speed
+        } else {
+            //set both motors to full speed
+            escs[0].speed(20)
+            escs[1].speed(20)
+        }
+        headingCorrection()
     }
 
     async function goThroughGate() {
@@ -399,7 +415,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         setTimeout(() => {
             intendedHeading = magnetometerData.heading;
             console.log("Heading set, going under");
-        },15000);
+        }, 15000);
         depthCorrection();
         headingCorrection();
     }

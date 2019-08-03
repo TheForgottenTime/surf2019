@@ -347,7 +347,7 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
         escs[4].speed(50);
         escs[5].speed(50);
     }
-
+/*
     async function goThroughGate() {
         console.log("You have 10 seconds to orient me towards the direction you want to keep.")
         setTimeout(() => {
@@ -378,7 +378,31 @@ board.on("ready", function () { // Once the computer is connected to the Arduino
             }, 10000);
         }, 10000);
     }
+*/
 
+    function depthCorrection() {
+        /*
+            Wait like 15 seconds 
+            Grab heading direction
+            submerge to set depth
+            go forward and kept heading while keeping depth
+
+        */
+
+    }
+    function headingCorrection() {
+
+    }
+
+    async function goThroughGate() {
+        console.log("Waiting 15 seconds then grabbing heading");
+        setTimeout(() => {
+            intendedHeading = magnetometerData.heading;
+            console.log("Heading set, going under");
+        },15000);
+        depthCorrection();
+        headingCorrection();
+    }
 
     /*  function logEvery2Seconds(i) {
         setTimeout(() => {
